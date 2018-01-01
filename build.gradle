@@ -9,8 +9,8 @@ buildscript {
 	}
 	
 	dependencies {
-		classpath("io.spring.gradle:dependency-management-plugin:$springPlatformGradleVersion")
-		classpath("org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion")
+		classpath("io.spring.gradle:dependency-management-plugin:${springPlatformGradleVersion}")
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
 		classpath "io.spring.gradle:propdeps-plugin:0.0.9.RELEASE"
 		classpath "gradle.plugin.org.detoeuf:swagger-codegen-plugin:1.7.4"
 		//jhipster-needle-gradle-buildscript-dependency - JHipster will add additional gradle build script plugins here
@@ -30,7 +30,7 @@ apply plugin: "io.spring.dependency-management"
 
 dependencyManagement {
 	imports {
-		mavenBom "io.spring.platform:platform-bom:$springPlatformVersion"
+		mavenBom "io.spring.platform:platform-bom:${springPlatformVersion}"
 		mavenBom 'io.github.jhipster:jhipster-dependencies:' + jhipster_dependencies_version
 		//jhipster-needle-gradle-dependency-management - JHipster will add additional dependencies management here
 	}
@@ -102,7 +102,7 @@ if (OperatingSystem.current().isWindows()) {
 		addResources = false
 		dependsOn pathingJar
 		doFirst {
-			classpath = files("$buildDir/classes/java/main", "$buildDir/resources/main", pathingJar.archivePath)
+			classpath = files("${buildDir}/classes/java/main", "${buildDir}/resources/main", pathingJar.archivePath)
 		}
 	}
 } else {
@@ -133,12 +133,12 @@ task cucumberTest(type: Test) {
 
 check.dependsOn cucumberTest
 task testReport(type: TestReport) {
-	destinationDir = file("$buildDir/reports/tests")
+	destinationDir = file("${buildDir}/reports/tests")
 	reportOn test
 }
 
 task cucumberTestReport(type: TestReport) {
-	destinationDir = file("$buildDir/reports/tests")
+	destinationDir = file("${buildDir}/reports/tests")
 	reportOn cucumberTest
 }
 
@@ -251,7 +251,7 @@ dependencies {
 	testImplementation ("org.springframework.boot:spring-boot-starter-test")
 	testImplementation ("org.springframework.security:spring-security-test")
 	testImplementation ("org.springframework.boot:spring-boot-test")
-	testImplementation ("org.assertj:assertj-core")
+	testImplementation ("org.assertj:assertj-core:${assertj_core_version}")
 	testImplementation ("junit:junit")
 	testImplementation ("org.mockito:mockito-core")
 	testImplementation ("com.mattbertolini:liquibase-slf4j")
