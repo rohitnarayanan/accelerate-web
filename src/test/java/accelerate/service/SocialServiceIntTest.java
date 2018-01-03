@@ -172,7 +172,7 @@ public class SocialServiceIntTest {
 
 		// Verify
 		User user = userRepository.findOneByEmailIgnoreCase("mail@mail.com").get();
-		assertThat(user.getActivated()).isEqualTo(true);
+		assertThat(user.isActivated()).isEqualTo(true);
 		assertThat(user.getPassword()).isNotEmpty();
 		Authority userAuthority = authorityRepository.findOne(AuthoritiesConstants.USER);
 		assertThat(user.getAuthorities().toArray()).containsExactly(userAuthority);
