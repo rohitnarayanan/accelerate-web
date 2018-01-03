@@ -1,12 +1,10 @@
-import {Component, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
-import {NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {JhiLanguageService} from 'ng-jhipster';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { JhiLanguageService } from 'ng-jhipster';
 
-import {ProfileService} from '../profiles/profile.service';
-import {JhiLanguageHelper, Principal, LoginModalService, LoginService} from '../../shared';
-
-import {VERSION} from '../../app.constants';
+import { ProfileService } from '../profiles/profile.service';
+import { JhiLanguageHelper, Principal, LoginModalService, LoginService } from '../../shared';
 
 @Component({
   selector: 'jhi-navbar',
@@ -21,7 +19,6 @@ export class NavbarComponent implements OnInit {
   languages: any[];
   swaggerEnabled: boolean;
   modalRef: NgbModalRef;
-  version: string;
 
   constructor(
     private loginService: LoginService,
@@ -32,7 +29,6 @@ export class NavbarComponent implements OnInit {
     private profileService: ProfileService,
     private router: Router
   ) {
-    this.version = VERSION ? 'v' + VERSION : '';
     this.isNavbarCollapsed = true;
   }
 

@@ -1,0 +1,29 @@
+nav {
+    min-height: 0px;
+    border-top: solid 1px #ccc;
+    border-radius: 0px;
+    padding: 10px 0px 0px 0px;
+    margin: 0px 15px 5px 15px;
+}
+
+nav a.footer-link {
+    font-size: 12px;
+}
+
+nav a.footer-link:focus {
+    text-decoration: none;
+    color: #337ab7;
+}
+
+.app-version {
+    font-size: 10px;
+    font-weight: bold;
+    color: #353d47
+}
+
+.app-copyright {
+    font-size: 10px;
+    font-weight: bold;
+    font-style: italic;
+    color: #353d47
+}
