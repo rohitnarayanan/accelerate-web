@@ -15,65 +15,123 @@ import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
 
 /**
- * Base abstract class for entities which will hold definitions for created, last modified by and created,
- * last modified by date.
+ * Base abstract class for entities which will hold definitions for created,
+ * last modified by and created, last modified by date.
+ * 
+ * @version 1.0 Initial Version
+ * @author JHipster
+ * @since January 03, 2018
  */
 @MappedSuperclass
 @Audited
 @EntityListeners(AuditingEntityListener.class)
 public abstract class AbstractAuditingEntity implements Serializable {
+	/**
+	 * serialVersionUID
+	 */
+	private static final long serialVersionUID = 1L;
 
-    private static final long serialVersionUID = 1L;
+	/**
+	 * 
+	 */
+	@CreatedBy
+	@Column(name = "created_by", nullable = false, length = 50, updatable = false)
+	@JsonIgnore
+	private String createdBy;
 
-    @CreatedBy
-    @Column(name = "created_by", nullable = false, length = 50, updatable = false)
-    @JsonIgnore
-    private String createdBy;
+	/**
+	 * 
+	 */
+	@CreatedDate
+	@Column(name = "created_date", nullable = false)
+	@JsonIgnore
+	private Instant createdDate = Instant.now();
 
-    @CreatedDate
-    @Column(name = "created_date", nullable = false)
-    @JsonIgnore
-    private Instant createdDate = Instant.now();
+	/**
+	 * 
+	 */
+	@LastModifiedBy
+	@Column(name = "last_modified_by", length = 50)
+	@JsonIgnore
+	private String lastModifiedBy;
 
-    @LastModifiedBy
-    @Column(name = "last_modified_by", length = 50)
-    @JsonIgnore
-    private String lastModifiedBy;
+	/**
+	 * 
+	 */
+	@LastModifiedDate
+	@Column(name = "last_modified_date")
+	@JsonIgnore
+	private Instant lastModifiedDate = Instant.now();
 
-    @LastModifiedDate
-    @Column(name = "last_modified_date")
-    @JsonIgnore
-    private Instant lastModifiedDate = Instant.now();
+	/**
+	 * Getter method for "createdBy" property
+	 * 
+	 * @return createdBy
+	 */
+	public String getCreatedBy() {
+		return this.createdBy;
+	}
 
-    public String getCreatedBy() {
-        return createdBy;
-    }
+	/**
+	 * Setter method for "createdBy" property
+	 * 
+	 * @param aCreatedBy
+	 */
+	public void setCreatedBy(String aCreatedBy) {
+		this.createdBy = aCreatedBy;
+	}
 
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
-    }
+	/**
+	 * Getter method for "createdDate" property
+	 * 
+	 * @return createdDate
+	 */
+	public Instant getCreatedDate() {
+		return this.createdDate;
+	}
 
-    public Instant getCreatedDate() {
-        return createdDate;
-    }
+	/**
+	 * Setter method for "createdDate" property
+	 * 
+	 * @param aCreatedDate
+	 */
+	public void setCreatedDate(Instant aCreatedDate) {
+		this.createdDate = aCreatedDate;
+	}
 
-    public void setCreatedDate(Instant createdDate) {
-        this.createdDate = createdDate;
-    }
+	/**
+	 * Getter method for "lastModifiedBy" property
+	 * 
+	 * @return lastModifiedBy
+	 */
+	public String getLastModifiedBy() {
+		return this.lastModifiedBy;
+	}
 
-    public String getLastModifiedBy() {
-        return lastModifiedBy;
-    }
+	/**
+	 * Setter method for "lastModifiedBy" property
+	 * 
+	 * @param aLastModifiedBy
+	 */
+	public void setLastModifiedBy(String aLastModifiedBy) {
+		this.lastModifiedBy = aLastModifiedBy;
+	}
 
-    public void setLastModifiedBy(String lastModifiedBy) {
-        this.lastModifiedBy = lastModifiedBy;
-    }
+	/**
+	 * Getter method for "lastModifiedDate" property
+	 * 
+	 * @return lastModifiedDate
+	 */
+	public Instant getLastModifiedDate() {
+		return this.lastModifiedDate;
+	}
 
-    public Instant getLastModifiedDate() {
-        return lastModifiedDate;
-    }
-
-    public void setLastModifiedDate(Instant lastModifiedDate) {
-        this.lastModifiedDate = lastModifiedDate;
-    }
+	/**
+	 * Setter method for "lastModifiedDate" property
+	 * 
+	 * @param aLastModifiedDate
+	 */
+	public void setLastModifiedDate(Instant aLastModifiedDate) {
+		this.lastModifiedDate = aLastModifiedDate;
+	}
 }

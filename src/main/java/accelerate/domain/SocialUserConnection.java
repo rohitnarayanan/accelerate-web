@@ -3,223 +3,405 @@ package accelerate.domain;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
+import accelerate.utils.CommonUtils;
+import accelerate.utils.JSONUtil;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Objects;
 
 /**
- * A Social user.
+ * A Social user
+ * 
+ * @version 1.0 Initial Version
+ * @author Rohit Narayanan
+ * @since January 03, 2018
  */
 @Entity
 @Table(name = "jhi_social_user_connection")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-
 public class SocialUserConnection implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
-    private static final long serialVersionUID = 1L;
+	/**
+	 * 
+	 */
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	/**
+	 * 
+	 */
+	@NotNull
+	@Column(name = "user_id", length = 255, nullable = false)
+	private String userId;
 
-    @NotNull
-    @Column(name = "user_id", length = 255, nullable = false)
-    private String userId;
+	/**
+	 * 
+	 */
+	@NotNull
+	@Column(name = "provider_id", length = 255, nullable = false)
+	private String providerId;
 
-    @NotNull
-    @Column(name = "provider_id", length = 255, nullable = false)
-    private String providerId;
+	/**
+	 * 
+	 */
+	@NotNull
+	@Column(name = "provider_user_id", length = 255, nullable = false)
+	private String providerUserId;
 
-    @NotNull
-    @Column(name = "provider_user_id", length = 255, nullable = false)
-    private String providerUserId;
+	/**
+	 * 
+	 */
+	@NotNull
+	@Column(nullable = false)
+	private Long rank;
 
-    @NotNull
-    @Column(nullable = false)
-    private Long rank;
+	/**
+	 * 
+	 */
+	@Column(name = "display_name", length = 255)
+	private String displayName;
 
-    @Column(name = "display_name", length = 255)
-    private String displayName;
+	/**
+	 * 
+	 */
+	@Column(name = "profile_url", length = 255)
+	private String profileURL;
 
-    @Column(name = "profile_url", length = 255)
-    private String profileURL;
+	/**
+	 * 
+	 */
+	@Column(name = "image_url", length = 255)
+	private String imageURL;
 
-    @Column(name = "image_url", length = 255)
-    private String imageURL;
+	/**
+	 * 
+	 */
+	@NotNull
+	@Column(name = "access_token", length = 255, nullable = false)
+	private String accessToken;
 
-    @NotNull
-    @Column(name = "access_token", length = 255, nullable = false)
-    private String accessToken;
+	/**
+	 * 
+	 */
+	@Column(length = 255)
+	private String secret;
 
-    @Column(length = 255)
-    private String secret;
+	/**
+	 * 
+	 */
+	@Column(name = "refresh_token", length = 255)
+	private String refreshToken;
 
-    @Column(name = "refresh_token", length = 255)
-    private String refreshToken;
+	/**
+	 * 
+	 */
+	@Column(name = "expire_time")
+	private Long expireTime;
 
-    @Column(name = "expire_time")
-    private Long expireTime;
+	/**
+	 * default constructor
+	 */
+	public SocialUserConnection() {
+		// empty constructor
+	}
 
-    public SocialUserConnection() {}
-    public SocialUserConnection(String userId,
-                                String providerId,
-                                String providerUserId,
-                                Long rank,
-                                String displayName,
-                                String profileURL,
-                                String imageURL,
-                                String accessToken,
-                                String secret,
-                                String refreshToken,
-                                Long expireTime) {
-        this.userId = userId;
-        this.providerId = providerId;
-        this.providerUserId = providerUserId;
-        this.rank = rank;
-        this.displayName = displayName;
-        this.profileURL = profileURL;
-        this.imageURL = imageURL;
-        this.accessToken = accessToken;
-        this.secret = secret;
-        this.refreshToken = refreshToken;
-        this.expireTime = expireTime;
-    }
+	/**
+	 * @param aUserId
+	 * @param aProviderId
+	 * @param aProviderUserId
+	 * @param aRank
+	 * @param aDisplayName
+	 * @param aProfileURL
+	 * @param aImageURL
+	 * @param aAccessToken
+	 * @param aSecret
+	 * @param aRefreshToken
+	 * @param aExpireTime
+	 */
+	public SocialUserConnection(String aUserId, String aProviderId, String aProviderUserId, Long aRank,
+			String aDisplayName, String aProfileURL, String aImageURL, String aAccessToken, String aSecret,
+			String aRefreshToken, Long aExpireTime) {
+		this.userId = aUserId;
+		this.providerId = aProviderId;
+		this.providerUserId = aProviderUserId;
+		this.rank = aRank;
+		this.displayName = aDisplayName;
+		this.profileURL = aProfileURL;
+		this.imageURL = aImageURL;
+		this.accessToken = aAccessToken;
+		this.secret = aSecret;
+		this.refreshToken = aRefreshToken;
+		this.expireTime = aExpireTime;
+	}
 
-    public Long getId() {
-        return id;
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	/**
+	 * @param aObject
+	 * @return
+	 */
+	@Override
+	public boolean equals(Object aObject) {
+		if (this == aObject) {
+			return true;
+		}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+		if ((aObject == null) || !(aObject instanceof Authority)) {
+			return false;
+		}
 
-    public String getUserId() {
-        return userId;
-    }
+		return CommonUtils.compare(((SocialUserConnection) aObject).id, this.id);
+	}
 
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#hashCode()
+	 */
+	/**
+	 * @return
+	 */
+	@Override
+	public int hashCode() {
+		return Objects.hashCode(this.id);
+	}
 
-    public String getProviderId() {
-        return providerId;
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
+	/**
+	 * @return
+	 */
+	@Override
+	public String toString() {
+		return "SocialUserConnection" + JSONUtil.serialize(this);
+	}
 
-    public void setProviderId(String providerId) {
-        this.providerId = providerId;
-    }
+	/**
+	 * Getter method for "id" property
+	 * 
+	 * @return id
+	 */
+	public Long getId() {
+		return this.id;
+	}
 
-    public String getProviderUserId() {
-        return providerUserId;
-    }
+	/**
+	 * Setter method for "id" property
+	 * 
+	 * @param aId
+	 */
+	public void setId(Long aId) {
+		this.id = aId;
+	}
 
-    public void setProviderUserId(String providerUserId) {
-        this.providerUserId = providerUserId;
-    }
+	/**
+	 * Getter method for "userId" property
+	 * 
+	 * @return userId
+	 */
+	public String getUserId() {
+		return this.userId;
+	}
 
-    public Long getRank() {
-        return rank;
-    }
+	/**
+	 * Setter method for "userId" property
+	 * 
+	 * @param aUserId
+	 */
+	public void setUserId(String aUserId) {
+		this.userId = aUserId;
+	}
 
-    public void setRank(Long rank) {
-        this.rank = rank;
-    }
+	/**
+	 * Getter method for "providerId" property
+	 * 
+	 * @return providerId
+	 */
+	public String getProviderId() {
+		return this.providerId;
+	}
 
-    public String getDisplayName() {
-        return displayName;
-    }
+	/**
+	 * Setter method for "providerId" property
+	 * 
+	 * @param aProviderId
+	 */
+	public void setProviderId(String aProviderId) {
+		this.providerId = aProviderId;
+	}
 
-    public void setDisplayName(String displayName) {
-        this.displayName = displayName;
-    }
+	/**
+	 * Getter method for "providerUserId" property
+	 * 
+	 * @return providerUserId
+	 */
+	public String getProviderUserId() {
+		return this.providerUserId;
+	}
 
-    public String getProfileURL() {
-        return profileURL;
-    }
+	/**
+	 * Setter method for "providerUserId" property
+	 * 
+	 * @param aProviderUserId
+	 */
+	public void setProviderUserId(String aProviderUserId) {
+		this.providerUserId = aProviderUserId;
+	}
 
-    public void setProfileURL(String profileURL) {
-        this.profileURL = profileURL;
-    }
+	/**
+	 * Getter method for "rank" property
+	 * 
+	 * @return rank
+	 */
+	public Long getRank() {
+		return this.rank;
+	}
 
-    public String getImageURL() {
-        return imageURL;
-    }
+	/**
+	 * Setter method for "rank" property
+	 * 
+	 * @param aRank
+	 */
+	public void setRank(Long aRank) {
+		this.rank = aRank;
+	}
 
-    public void setImageURL(String imageURL) {
-        this.imageURL = imageURL;
-    }
+	/**
+	 * Getter method for "displayName" property
+	 * 
+	 * @return displayName
+	 */
+	public String getDisplayName() {
+		return this.displayName;
+	}
 
-    public String getAccessToken() {
-        return accessToken;
-    }
+	/**
+	 * Setter method for "displayName" property
+	 * 
+	 * @param aDisplayName
+	 */
+	public void setDisplayName(String aDisplayName) {
+		this.displayName = aDisplayName;
+	}
 
-    public void setAccessToken(String accessToken) {
-        this.accessToken = accessToken;
-    }
+	/**
+	 * Getter method for "profileURL" property
+	 * 
+	 * @return profileURL
+	 */
+	public String getProfileURL() {
+		return this.profileURL;
+	}
 
-    public String getSecret() {
-        return secret;
-    }
+	/**
+	 * Setter method for "profileURL" property
+	 * 
+	 * @param aProfileURL
+	 */
+	public void setProfileURL(String aProfileURL) {
+		this.profileURL = aProfileURL;
+	}
 
-    public void setSecret(String secret) {
-        this.secret = secret;
-    }
+	/**
+	 * Getter method for "imageURL" property
+	 * 
+	 * @return imageURL
+	 */
+	public String getImageURL() {
+		return this.imageURL;
+	}
 
-    public String getRefreshToken() {
-        return refreshToken;
-    }
+	/**
+	 * Setter method for "imageURL" property
+	 * 
+	 * @param aImageURL
+	 */
+	public void setImageURL(String aImageURL) {
+		this.imageURL = aImageURL;
+	}
 
-    public void setRefreshToken(String refreshToken) {
-        this.refreshToken = refreshToken;
-    }
+	/**
+	 * Getter method for "accessToken" property
+	 * 
+	 * @return accessToken
+	 */
+	public String getAccessToken() {
+		return this.accessToken;
+	}
 
-    public Long getExpireTime() {
-        return expireTime;
-    }
+	/**
+	 * Setter method for "accessToken" property
+	 * 
+	 * @param aAccessToken
+	 */
+	public void setAccessToken(String aAccessToken) {
+		this.accessToken = aAccessToken;
+	}
 
-    public void setExpireTime(Long expireTime) {
-        this.expireTime = expireTime;
-    }
+	/**
+	 * Getter method for "secret" property
+	 * 
+	 * @return secret
+	 */
+	public String getSecret() {
+		return this.secret;
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
+	/**
+	 * Setter method for "secret" property
+	 * 
+	 * @param aSecret
+	 */
+	public void setSecret(String aSecret) {
+		this.secret = aSecret;
+	}
 
-        SocialUserConnection user = (SocialUserConnection) o;
+	/**
+	 * Getter method for "refreshToken" property
+	 * 
+	 * @return refreshToken
+	 */
+	public String getRefreshToken() {
+		return this.refreshToken;
+	}
 
-        if (!id.equals(user.id)) {
-            return false;
-        }
+	/**
+	 * Setter method for "refreshToken" property
+	 * 
+	 * @param aRefreshToken
+	 */
+	public void setRefreshToken(String aRefreshToken) {
+		this.refreshToken = aRefreshToken;
+	}
 
-        return true;
-    }
+	/**
+	 * Getter method for "expireTime" property
+	 * 
+	 * @return expireTime
+	 */
+	public Long getExpireTime() {
+		return this.expireTime;
+	}
 
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(id);
-    }
-
-    @Override
-    public String toString() {
-        return "SocialUserConnection{" +
-            "id=" + id +
-            ", userId=" + userId +
-            ", providerId='" + providerId + '\'' +
-            ", providerUserId='" + providerUserId + '\'' +
-            ", rank=" + rank +
-            ", displayName='" + displayName + '\'' +
-            ", profileURL='" + profileURL + '\'' +
-            ", imageURL='" + imageURL + '\'' +
-            ", accessToken='" + accessToken + '\'' +
-            ", secret='" + secret + '\'' +
-            ", refreshToken='" + refreshToken + '\'' +
-            ", expireTime=" + expireTime +
-            '}';
-    }
+	/**
+	 * Setter method for "expireTime" property
+	 * 
+	 * @param aExpireTime
+	 */
+	public void setExpireTime(Long aExpireTime) {
+		this.expireTime = aExpireTime;
+	}
 }
